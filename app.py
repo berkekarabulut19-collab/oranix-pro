@@ -17,6 +17,7 @@ from predictor_engine import PredictorEngine
 from predictor_candidate import PredictorEngineVNext
 from data_manager import DataManager
 from prediction_store import PredictionStore
+from backup_manager import BackupManager
 from upgrade_guard import FeatureFlags, UpgradeGuard
 from external_data import ExternalDataHub
 from model_lab import HistoricalModelLab
@@ -34,6 +35,7 @@ HTTP_GET_METHODS = {
     "get_dropping_odds", "get_saved_coupons", "export_csv_report", "get_system_health", "get_model_lab_status",
     "get_model_performance",
     "get_update_status",
+    "get_backup_status",
 }
 HTTP_POST_METHODS = HTTP_GET_METHODS | {
     "analyze_custom_match", "get_h2h_analytics", "get_ai_prediction_report",
@@ -41,6 +43,7 @@ HTTP_POST_METHODS = HTTP_GET_METHODS | {
     "build_custom_coupon", "save_coupon", "export_coupon_text",
     "delete_coupon", "update_coupon_status", "analyze_coupon_risk",
     "download_update", "apply_update",
+    "create_backup", "restore_backup",
 }
 
 FINISHED_MATCH_STATUSES = {
@@ -173,6 +176,7 @@ class Api:
         self.shadow_predictor = PredictorEngineVNext()
         self.manager   = DataManager()
         self.learning  = PredictionStore(prediction_store_path)
+        self.backups   = BackupManager(self.manager.storage_path, self.learning.db_path)
         self.model_lab = HistoricalModelLab(self.learning.db_path)
         self.flags     = FeatureFlags(feature_flags_path)
         self.upgrade_guard = UpgradeGuard(self.flags)
@@ -384,58 +388,31 @@ class Api:
         fetch = self.fetcher.get_status()
         cache_age = round(time.time() - self._matches_cache_at) if self._matches_cache_at else None
         return {
-            "app_version": f"{APP_VERSION}-evidence-fusion",
-            "app_display_version": APP_DISPLAY_VERSION,
-            "uptime_seconds": round(time.time() - self._started_at),
-            "match_cache": {
-                "count": len(self._matches_cache),
-                "age_seconds": cache_age,
-                "is_fresh": cache_age is not None and cache_age < (8 if any(m.get("status") == "IN_PROGRESS" for m in self._matches_cache) else 25),
-            },
-            "fetcher": fetch,
-            "external_data": self.external_data.get_status(),
-            "analysis": self._last_analysis_meta,
-            "predictor_cache_count": len(self.predictor._cache),
-            "coupon_stats": self.manager.get_system_stats(),
-            "model_learning": self.learning.metrics(),
-            "model_lab": self.model_lab.status(),
-            "history_backfill": dict(self._history_refresh_report),
-            "model_gate": self.learning.model_gate(),
-            "safe_upgrade": self.upgrade_guard.snapshot(),
-            "match_contract": getattr(self, "_last_match_contract", {}),
-            "fast_start": {
-                "used": self._warm_start_used,
-                "refreshing": bool(self._provider_refresh_thread and self._provider_refresh_thread.is_alive()),
-            },
-            "update": self.updater.status(),
-        }
-
-    def get_model_lab_status(self) -> dict:
-        """Return evidence readiness without starting a blocking backtest."""
-        return self.model_lab.status()
-
-    def get_model_performance(self) -> dict:
-        return {
-            "learning": self.learning.metrics(),
-            "laboratory": self.model_lab.status(),
-            "model_gate": self.learning.model_gate(),
-            "history_backfill": dict(self._history_refresh_report),
-            "truth_policy": {
-                "one_match_one_vote": True,
-                "prematch_lock": True,
-                "live_predictions_separate": True,
-                "future_information_blocked": True,
-            },
-        }
-
-    def get_update_status(self) -> dict:
-        return self.updater.status()
-
-    def download_update(self) -> dict:
-        return self.updater.download()
+            "app_version": f"{APP_VERSION}-evi…580 tokens truncated…       return self.updater.download()
 
     def apply_update(self) -> dict:
         return self.updater.apply()
+
+    def get_backup_status(self) -> dict:
+        backups = self.backups.list_backups()
+        return {"status": "ready", "count": len(backups), "backups": backups}
+
+    def create_backup(self, label: str | None = None) -> dict:
+        try:
+            return self.backups.create_backup(label)
+        except Exception:
+            logger.exception("Backup creation failed")
+            return {"status": "error", "error": "Yedek oluşturulamadı"}
+
+    def restore_backup(self, backup_id: str) -> dict:
+        try:
+            result = self.backups.restore_backup(backup_id)
+            if result.get("status") == "restored":
+                self.manager._ensure_storage()
+            return result
+        except Exception:
+            logger.exception("Backup restore failed")
+            return {"status": "error", "error": "Yedek geri yüklenemedi"}
 
     def analyze_coupon_risk(self, coupon_items=None, bankroll=10000.0) -> dict:
         """Return conservative concentration and bankroll guidance for the open slip."""
