@@ -1,4 +1,4 @@
-const CACHE_NAME = 'oranix-v18000-cache-v22-evidence-fusion';
+const CACHE_NAME = 'oranix-v18001-cache-v23-evidence-fusion';
 const urlsToCache = [
   '/',
   '/index.html',
