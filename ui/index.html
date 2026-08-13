@@ -135,6 +135,7 @@
                     <button class="topbar-action-btn voice-btn" onclick="startVoiceRecognition()">🎙️ AI Dinle</button>
                     <button class="topbar-action-btn bot-btn" onclick="toggleChatbot()">🤖 AI Bot</button>
                     <button class="topbar-action-btn csv-btn" onclick="exportCsvReport()">📊 CSV İndir</button>
+                    <button class="topbar-action-btn backup-btn" onclick="createLocalBackup()">💾 Yedekle</button>
                 </div>
             </div>
 
@@ -247,61 +248,7 @@
                     🚀 1.000 Kuantum Maç Simülasyonunu Başlat
                 </button>
                 <div style="background:radial-gradient(ellipse at center, #065f46 0%, #022c22 100%);border-radius:14px;padding:20px;border:2px solid var(--green-lt);position:relative;height:320px;overflow:hidden" id="simPitchArea">
-                    <canvas id="simCanvas" width="800" height="280" style="width:100%;height:100%"></canvas>
-                </div>
-                <div id="simStatsSummary" style="margin-top:14px;font-size:13px;color:var(--text-1);font-weight:700">
-                    Simülasyon başlatılmayı bekliyor...
-                </div>
-            </div>
-        </div>
-
-        <!-- CUSTOM MATCH ANALYZER VIEW -->
-        <div id="viewCustomMatch" class="view" style="display:none">
-            <div class="value-header">
-                <h2>💎 Kendi Özel Maçını Analiz Et</h2>
-                <p>İstediğiniz iki takımı ve oranları girin; Yapay Sinir Ağı ve Monte Carlo motoru maçı anında analiz etsin</p>
-            </div>
-            <div style="margin-top:16px;background:var(--bg-card);padding:20px;border-radius:14px;border:1px solid var(--border-lt)">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-                    <div>
-                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">EV SAHİBİ TAKIM:</label>
-                        <input type="text" id="custHomeName" value="Barcelona" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
-                    </div>
-                    <div>
-                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">DEPLASMAN TAKIMI:</label>
-                        <input type="text" id="custAwayName" value="Real Madrid" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
-                    </div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
-                    <div>
-                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">1 ORANI:</label>
-                        <input type="number" id="custHomeOdds" value="2.10" step="0.05" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
-                    </div>
-                    <div>
-                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">X ORANI:</label>
-                        <input type="number" id="custDrawOdds" value="3.40" step="0.05" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
-                    </div>
-                    <div>
-                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">2 ORANI:</label>
-                        <input type="number" id="custAwayOdds" value="3.20" step="0.05" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
-                    </div>
-                </div>
-                <button onclick="analyzeCustomUserMatch()" style="width:100%;padding:12px;background:var(--grad-brand);color:white;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-size:14px">
-                    🔮 Deep Learning Analiz Raporunu Üret
-                </button>
-                <div id="customMatchResultArea" style="margin-top:16px"></div>
-            </div>
-        </div>
-
-        <div id="viewStandings" class="view" style="display:none">
-            <div class="value-header">
-                <h2>📊 Canlı Lig Puan Durumu & Form Trendleri</h2>
-                <p>Avrupa'nın ve Türkiye'nin önde gelen liglerinin canlı puan durumu, gol averajları ve son 5 maç form grafikleri</p>
-            </div>
-            <div id="standingsContent" style="margin-top:16px"></div>
-        </div>
-
-        <div id="viewFinance" class="view" style="display:none">
+                    <canvas id="simCanvas" width="800" height="280" styl…1205 tokens truncated…    <div id="viewFinance" class="view" style="display:none">
             <div class="value-header">
                 <h2>🧮 Martingale & Fibonacci Kasa Katlama Simülatörü</h2>
                 <p>Kasanızı matematiksel seriler (Martingale 2x, Fibonacci, Kelly Criterion) ile yöneterek kayıpları sıfırlama hesaplayıcısı</p>
