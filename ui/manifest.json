@@ -1,0 +1,18 @@
+{
+  "name": "ORANİX PRO v5000.0 OMNIPOTENT GOD",
+  "short_name": "OranixPro",
+  "description": "Canlı İddaa & Yapay Zeka Tahmin Motoru",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03050a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/isometric-folders/512/football.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
