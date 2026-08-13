@@ -1,0 +1,10 @@
+saved_coupons.json
+__pycache__/
+*.pyc
+build*/
+dist*/
+*.exe
+*.zip
+.env
+.graphify-out/
+graphify-out/
