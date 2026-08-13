@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORANİX PRO v18000 — EVIDENCE FUSION</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=15000_1000">
+</head>
+<body class="theme-cyber">
+
+<!-- Dynamic Ambient Canvas Background -->
+<canvas id="bgCanvas"></canvas>
+
+
+
+<!-- MAIN APP WRAPPER -->
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="update-status is-muted" id="updateStatus">Otomatik güncelleme adresi bekleniyor</div>
+<div class="app-wrapper">
+    <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-mark">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 2L4 8v8c0 7.18 5.1 13.9 12 15.9 6.9-2 12-8.72 12-15.9V8L16 2z" fill="url(#logoGrad)"/>
+                    <path d="M12 16l3 3 5-6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#a855f7"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-title">ORANİX</span>
+                <span class="logo-sub">EVIDENCE FUSION v18000</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">NAVİGASYON</div>
+            <button class="nav-item active" id="navMatches" onclick="switchView('matches')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                Canlı & Maçlar
+            </button>
+            <button class="nav-item" id="navSurebet" onclick="switchView('surebet')" style="background:rgba(16,185,129,0.12);color:var(--green-lt)">
+                ⚡ SureBet (%100 Kâr)
+            </button>
+            <button class="nav-item" id="navSimulator" onclick="switchView('simulator')" style="background:rgba(168,85,247,0.15);color:var(--purple-lt)">
+                🔮 Kuantum 3D Simülatör
+            </button>
+            <button class="nav-item" id="navCustomMatch" onclick="switchView('customMatch')" style="background:rgba(6,182,212,0.15);color:var(--cyan)">
+                💎 Kendi Maçını Analiz Et
+            </button>
+            <button class="nav-item" id="navStandings" onclick="switchView('standings')">
+                📊 Canlı Puan Durumu
+            </button>
+            <button class="nav-item" id="navDropping" onclick="switchView('dropping')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Oran Düşüşleri (Hot)
+            </button>
+            <button class="nav-item" id="navValue" onclick="switchView('value')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                Değer Bahisleri (+EV)
+            </button>
+            <button class="nav-item" id="navCoupon" onclick="switchView('coupon')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                Kupon Sihirbazı
+            </button>
+            <button class="nav-item" id="navBankroll" onclick="switchView('bankroll')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                🎰 Sanal Kasa (10.000 TL)
+            </button>
+            <button class="nav-item" id="navFinance" onclick="switchView('finance')">
+                🧮 Martingale Finansör
+            </button>
+            <button class="nav-item" id="navLeaderboard" onclick="switchView('leaderboard')">
+                🧪 Model Karnesi
+            </button>
+            <button class="nav-item" id="navTrends" onclick="switchView('trends')" style="background:rgba(245,158,11,0.12);color:var(--amber)">
+                📈 Günün Trendleri
+            </button>
+            <button class="nav-item" id="navSaved" onclick="switchView('saved')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                Kayıtlı Kuponlar
+            </button>
+
+            <div class="nav-section-label">LİGLER</div>
+            <div id="leagueFilters" class="league-filters"></div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sound-toggle-wrap" onclick="toggleSound()">
+                <span id="soundIcon">🔊</span>
+                <span id="soundLabel">Ses Efektleri Açık</span>
+            </div>
+            <div class="live-indicator">
+                <span class="live-dot"></span>
+                <span id="liveCount">0</span> Canlı Maç
+            </div>
+            <div class="last-update" id="lastUpdateTime">Güncelleniyor...</div>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+                <!-- TOP BAR (2-ROW PERFECT LAYOUT) -->
+                <!-- TOP BAR (SYMMETRICAL LUXURY CONTROL CENTER) -->
+        <!-- MACKOLIK CANLI MAÇ SKOR BANDI -->
+<div class="mackolik-live-bar" id="mackolikLiveBar">
+    <div class="mlb-label">
+        <span class="live-dot-red"></span> CANLI SKORLAR
+    </div>
+    <div class="mlb-slider" id="mackolikLiveSlider">
+        <div class="mlb-item">Canlı maç verileri yükleniyor...</div>
+    </div>
+</div>
+        <header class="topbar">
+            <div class="topbar-header-row">
+                <div class="topbar-left">
+                    <div class="title-stack"><span class="title-eyebrow">MAÇKOLİK CANLI VERİ MERKEZİ</span><h1 class="page-title" id="pageTitle">Maç Merkezi</h1></div>
+                    <span class="match-count-badge" id="matchCountBadge">0 Maç</span>
+                    <span class="auto-refresh-badge" id="autoRefreshBadge">● <span id="refreshTimer">10</span>s canlı yenileme</span>
+                </div>
+                <div class="topbar-action-group">
+                    <button class="topbar-action-btn radio-btn" onclick="playAiRadioBroadcast()">📻 AI Spor Radyosu</button>
+                    <button class="topbar-action-btn qr-btn" onclick="openQrModal()">📱 Mobil QR</button>
+                    <button class="topbar-action-btn voice-btn" onclick="startVoiceRecognition()">🎙️ AI Dinle</button>
+                    <button class="topbar-action-btn bot-btn" onclick="toggleChatbot()">🤖 AI Bot</button>
+                    <button class="topbar-action-btn csv-btn" onclick="exportCsvReport()">📊 CSV İndir</button>
+                </div>
+            </div>
+
+            <div class="topbar-toolbar-strip">
+                <div class="toolbar-left">
+                    <div class="theme-select-wrap">
+                        <select id="themeSelect" class="toolbar-select" onchange="changeTheme(this.value)">
+                            <option value="cyber">🌌 Cyber Neon</option>
+                            <option value="obsidian">🖤 Deep Obsidian</option>
+                            <option value="emerald">🟢 Emerald Pitch</option>
+                            <option value="gold">👑 VIP Gold</option>
+                        </select>
+                    </div>
+                    <div class="strategy-select-wrap">
+                        <select id="strategySelect" class="toolbar-select" onchange="filterMatches()">
+                            <option value="all">Tüm Maçlar</option>
+                            <option value="today">📅 Sadece Bugün</option>
+                            <option value="tomorrow">📅 Yarın</option>
+                            <option value="week">📅 Bu Hafta (7 Gün)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="toolbar-center">
+                    <div class="search-box-toolbar">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" id="searchInput" placeholder="🔍 Takım, Lig veya Maç Ara..." oninput="filterMatches()">
+                    </div>
+                </div>
+
+                <div class="toolbar-right">
+                    <button class="toolbar-btn refresh-btn-tb" onclick="manualRefresh()">🔄 Yenile</button>
+                    <button class="toolbar-btn slip-btn-tb" onclick="toggleSlipDrawer()">🎫 Kuponum (<span id="slipCountBadge">0</span>)</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="system-health-bar" id="systemHealthBar" aria-live="polite">
+            <div class="health-state is-loading" id="healthState"><span class="health-dot"></span><strong>Sistem hazırlanıyor</strong></div>
+            <div class="health-metric"><span>Veri</span><strong id="healthSource">Bağlanıyor…</strong></div>
+            <div class="health-metric"><span>Analiz</span><strong id="healthAnalysis">0 / 0</strong></div>
+            <div class="health-metric"><span>Süre</span><strong id="healthLatency">—</strong></div>
+            <div class="health-metric"><span>Önbellek</span><strong id="healthCache">—</strong></div>
+            <div class="health-metric"><span>Model Öğrenme</span><strong id="healthLearning">Veri bekleniyor</strong></div>
+            <div class="health-metric"><span>Kanıt Laboratuvarı</span><strong id="healthModelLab">Kuruluyor</strong></div>
+            <div class="health-metric"><span>Ek Veri</span><strong id="healthExternal">Kontrol ediliyor</strong></div>
+            <div class="health-metric"><span>Güvenli Upgrade</span><strong id="healthUpgrade">Koruma aktif</strong></div>
+            <div class="health-updated" id="healthUpdated">İlk veri bekleniyor</div>
+        </section>
+
+        <!-- HERO FEATURED MATCH OF THE DAY BANNER -->
+        <div class="hero-banner" id="heroBanner">
+            <div class="hero-banner-inner" id="heroBannerContent">
+                <div class="hero-badge">⭐ GÜNÜN HEDEF BANKO MAÇI</div>
+                <div class="hero-teams" id="heroTeams">Maç yükleniyor...</div>
+                <div class="hero-details" id="heroDetails">Yapay Zeka Analiz Ediyor...</div>
+            </div>
+        </div>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-item">
+                <span class="stat-num" id="statTotal">0</span>
+                <span class="stat-lbl">Toplam Maç</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num value-green" id="statValue">0</span>
+                <span class="stat-lbl">+EV Fırsat</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num value-purple" id="statHighConf">0</span>
+                <span class="stat-lbl">Yüksek Güven</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num value-orange" id="statLive">0</span>
+                <span class="stat-lbl">Canlı Maç</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num value-cyan" id="statDrop">0</span>
+                <span class="stat-lbl">Oran Düşüşü</span>
+            </div>
+        </div>
+
+        <!-- VIEWS -->
+        <div id="viewMatches" class="view active">
+            <div class="matches-grid" id="matchesGrid">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Deep Learning Neural Network ve Asya Handikap matrisi yükleniyor...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewSurebet" class="view" style="display:none">
+            <div class="value-header">
+                <h2>⚡ SureBet Arbitraj Fırsatları (+0% Risk Garantili Kâr)</h2>
+                <p>Global bürolar arası oran farklarından yararlanarak matematiksel olarak risk almadan %100 kesin kâr ettiren arbitraj çiftleri</p>
+            </div>
+            <div id="surebetList" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));gap:16px;margin-top:14px"></div>
+        </div>
+
+        <!-- QUANTUM 3D SIMULATOR VIEW -->
+        <div id="viewSimulator" class="view" style="display:none">
+            <div class="value-header">
+                <h2>🔮 Kuantum Maç Simülatörü (1.000 Canlı Maç Simülasyonu)</h2>
+                <p>Seçeceğiniz maç için 1.000 adet yapay zeka simülasyonunu yeşil sahada canlı pas ve şut animasyonu olarak çalıştırın</p>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-card);padding:20px;border-radius:14px;border:1px solid var(--border-lt);text-align:center">
+                <button onclick="runQuantumPitchSimulation()" style="padding:12px 24px;background:var(--grad-brand);color:white;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-size:14px;margin-bottom:14px">
+                    🚀 1.000 Kuantum Maç Simülasyonunu Başlat
+                </button>
+                <div style="background:radial-gradient(ellipse at center, #065f46 0%, #022c22 100%);border-radius:14px;padding:20px;border:2px solid var(--green-lt);position:relative;height:320px;overflow:hidden" id="simPitchArea">
+                    <canvas id="simCanvas" width="800" height="280" style="width:100%;height:100%"></canvas>
+                </div>
+                <div id="simStatsSummary" style="margin-top:14px;font-size:13px;color:var(--text-1);font-weight:700">
+                    Simülasyon başlatılmayı bekliyor...
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOM MATCH ANALYZER VIEW -->
+        <div id="viewCustomMatch" class="view" style="display:none">
+            <div class="value-header">
+                <h2>💎 Kendi Özel Maçını Analiz Et</h2>
+                <p>İstediğiniz iki takımı ve oranları girin; Yapay Sinir Ağı ve Monte Carlo motoru maçı anında analiz etsin</p>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-card);padding:20px;border-radius:14px;border:1px solid var(--border-lt)">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">EV SAHİBİ TAKIM:</label>
+                        <input type="text" id="custHomeName" value="Barcelona" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">DEPLASMAN TAKIMI:</label>
+                        <input type="text" id="custAwayName" value="Real Madrid" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">1 ORANI:</label>
+                        <input type="number" id="custHomeOdds" value="2.10" step="0.05" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">X ORANI:</label>
+                        <input type="number" id="custDrawOdds" value="3.40" step="0.05" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">2 ORANI:</label>
+                        <input type="number" id="custAwayOdds" value="3.20" step="0.05" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                </div>
+                <button onclick="analyzeCustomUserMatch()" style="width:100%;padding:12px;background:var(--grad-brand);color:white;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-size:14px">
+                    🔮 Deep Learning Analiz Raporunu Üret
+                </button>
+                <div id="customMatchResultArea" style="margin-top:16px"></div>
+            </div>
+        </div>
+
+        <div id="viewStandings" class="view" style="display:none">
+            <div class="value-header">
+                <h2>📊 Canlı Lig Puan Durumu & Form Trendleri</h2>
+                <p>Avrupa'nın ve Türkiye'nin önde gelen liglerinin canlı puan durumu, gol averajları ve son 5 maç form grafikleri</p>
+            </div>
+            <div id="standingsContent" style="margin-top:16px"></div>
+        </div>
+
+        <div id="viewFinance" class="view" style="display:none">
+            <div class="value-header">
+                <h2>🧮 Martingale & Fibonacci Kasa Katlama Simülatörü</h2>
+                <p>Kasanızı matematiksel seriler (Martingale 2x, Fibonacci, Kelly Criterion) ile yöneterek kayıpları sıfırlama hesaplayıcısı</p>
+            </div>
+            <div style="margin-top:16px;background:var(--bg-card);padding:20px;border-radius:14px;border:1px solid var(--border-lt)">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">BAŞLANGIÇ KASASI (TL):</label>
+                        <input type="number" id="finBankroll" value="1000" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">İLK BAHİS TUTARI (TL):</label>
+                        <input type="number" id="finBase" value="50" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                    <div>
+                        <label style="font-size:12px;font-weight:700;color:var(--text-3)">ORTALAMA ORAN:</label>
+                        <input type="number" id="finOdds" value="2.00" step="0.10" style="width:100%;padding:10px;margin-top:4px;background:rgba(255,255,255,0.05);border:1px solid var(--border-lt);border-radius:8px;color:white;font-weight:800">
+                    </div>
+                </div>
+                <button onclick="calculateFinanceSim()" style="width:100%;margin-top:16px;padding:12px;background:var(--grad-brand);color:white;font-weight:900;border:none;border-radius:10px;cursor:pointer">
+                    🚀 Martingale & Fibonacci Serisini Hesapla
+                </button>
+                <div id="financeResults" style="margin-top:16px"></div>
+            </div>
+        </div>
+
+        <div id="viewDropping" class="view" style="display:none">
+            <div class="value-header">
+                <h2>⚡ Oran Düşüşleri & Sıcak Para Akışı (Hot Money)</h2>
+                <p>Açılış oranına göre en çok düşen ve piyasada yüksek bahis hacmi alan canlı maçlar</p>
+            </div>
+            <div id="droppingList" class="dropping-list" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));gap:16px;margin-top:14px"></div>
+        </div>
+
+        <div id="viewValue" class="view" style="display:none">
+            <div class="value-header">
+                <h2>💎 Günün Değer Bahisleri (+EV)</h2>
+                <p>Expected Value (+EV) pozitif, Kelly Kriteri kasa yöntemi ile hesaplanmış fırsatlar</p>
+            </div>
+            <div id="valueList" class="value-list" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));gap:16px;margin-top:14px"></div>
+        </div>
+
+        <div id="viewBankroll" class="view" style="display:none">
+            <div class="value-header">
+                <h2>🎰 Sanal Kasa & Kasa Katlama Simülatörü</h2>
+                <p>10.000 TL başlangıç kasası ile yapay zeka kuponlarını risk almadan test edin ve kar/zarar grafiğinizi görün</p>
+            </div>
+            <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+                <div style="background:var(--bg-card);padding:16px;border-radius:12px;border:1px solid var(--border-lt)">
+                    <div style="font-size:11px;color:var(--text-3)">MEVCUT KASA</div>
+                    <div style="font-size:24px;font-weight:900;color:var(--green-lt);margin-top:4px" id="bankrollBalance">10.000,00 TL</div>
+                </div>
+                <div style="background:var(--bg-card);padding:16px;border-radius:12px;border:1px solid var(--border-lt)">
+                    <div style="font-size:11px;color:var(--text-3)">OYNANAN KUPON</div>
+                    <div style="font-size:24px;font-weight:900;color:var(--purple-lt);margin-top:4px" id="bankrollPlayed">12 Kupon</div>
+                </div>
+                <div style="background:var(--bg-card);padding:16px;border-radius:12px;border:1px solid var(--border-lt)">
+                    <div style="font-size:11px;color:var(--text-3)">BAŞARI ORANI (WIN RATE)</div>
+                    <div style="font-size:24px;font-weight:900;color:var(--amber);margin-top:4px" id="bankrollWinRate">%83.3</div>
+                </div>
+                <div style="background:var(--bg-card);padding:16px;border-radius:12px;border:1px solid var(--border-lt)">
+                    <div style="font-size:11px;color:var(--text-3)">TOPLAM KÂR</div>
+                    <div style="font-size:24px;font-weight:900;color:var(--cyan);margin-top:4px" id="bankrollProfit">+4.350,00 TL</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewLeaderboard" class="view" style="display:none">
+            <div class="performance-header">
+                <div><span>GERÇEK SONUÇ DENETİMİ</span><h2>🧪 Model Karnesi</h2><p>Yalnızca maç başlamadan kilitlenen tahminler ölçülür. Aynı maç başarı oranını birden fazla kez etkileyemez.</p></div>
+                <div class="truth-shield">✓ Veri sızıntısı koruması</div>
+            </div>
+            <div id="modelPerformanceContent" class="performance-dashboard">
+                <div class="loading-state"><div class="loading-spinner"></div><p>Gerçek performans kayıtları hazırlanıyor…</p></div>
+            </div>
+        </div>
+
+        <div id="viewCoupon" class="view" style="display:none">
+            <div class="vip-preset-row">
+                <button class="vip-btn kasa-btn" onclick="generateVipPreset('kasa')">🛡️ Kasa Katlama</button>
+                <button class="vip-btn ideal-btn" onclick="generateVipPreset('ideal')">💎 İdeal Oran</button>
+                <button class="vip-btn gol-btn" onclick="generateVipPreset('gol')">⚽ Gol Canavarı</button>
+                <button class="vip-btn hot-btn" onclick="generateVipPreset('hot')">🔥 Hot Money</button>
+                <button class="vip-btn bomba-btn" onclick="generateVipPreset('bomba')">💣 Bomba Sürpriz</button>
+            </div>
+            <div class="custom-coupon-builder-box">
+                <h3>🔮 Özel Oran Kupon Oluşturucu</h3>
+                <div class="builder-inputs">
+                    <div class="input-group">
+                        <label>Hedef Oran:</label>
+                        <select id="targetOddsSelect">
+                            <option value="3.0">3.00 (Güvenli)</option>
+                            <option value="5.0" selected>5.00 (Dengeli)</option>
+                            <option value="10.0">10.00 (Yüksek Oran)</option>
+                            <option value="25.0">25.00+ (Bomba Sürpriz)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Maç Sayısı:</label>
+                        <select id="targetCountSelect">
+                            <option value="2">2 Maçlı İkili</option>
+                            <option value="3" selected>3 Maçlık Kupon</option>
+                            <option value="4">4 Maçlık Kupon</option>
+                            <option value="5">5 Maçlık Kupon</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Risk Stratejisi:</label>
+                        <select id="targetRiskSelect">
+                            <option value="balanced">⚖️ Dengeli (+EV)</option>
+                            <option value="safe">🛡️ Düşük Risk (Banko)</option>
+                            <option value="value">💎 Sadece +EV Bahisler</option>
+                        </select>
+                    </div>
+                    <button class="generate-custom-btn" onclick="generateCustomCoupon()">🚀 Kupon Üret</button>
+                </div>
+            </div>
+            <div id="couponList" class="coupon-list"></div>
+        </div>
+
+        <div id="viewSaved" class="view" style="display:none">
+            <div class="value-header">
+                <h2>💾 Kaydedilen Kuponlar</h2>
+                <p>Daha önce kaydettiğiniz yapay zeka kuponları ve performans geçmişi</p>
+            </div>
+            <div id="savedList" class="saved-list" style="margin-top:14px"></div>
+        </div>
+
+        <!-- POWER RANKINGS VIEW -->
+        <div id="viewPowerRankings" class="view" style="display:none">
+            <div class="value-header">
+                <h2>⚡ ELO & Güç Sıralaması Matrisi</h2>
+                <p>Bültendeki tüm maçların ELO farkı, form momentumu ve bağımsız güç skoru karşılaştırması</p>
+            </div>
+            <div id="powerRankingsContent" style="margin-top:14px"></div>
+        </div>
+
+        <!-- TRENDS VIEW -->
+        <div id="viewTrends" class="view" style="display:none">
+            <div class="value-header">
+                <h2>📈 Günün Trendleri & Sıcak Bahis Akışı</h2>
+                <p>Bugünün en sıcak maçları, xG trendi en yüksek karşılaşmalar ve pazar istatistikleri</p>
+            </div>
+            <div id="trendsStatsBar" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px"></div>
+            <div style="margin-top:20px">
+                <div style="font-size:13px;font-weight:800;color:var(--text-2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">⚡ EN YÜKSEK xG BEKLENEN MAÇLAR</div>
+                <div id="trendsXgList" style="display:flex;flex-direction:column;gap:8px"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ═══════════════════ MOBILE QR COMPANION MODAL ═══════════════════ -->
+<div id="qrModalOverlay" class="modal-overlay">
+    <div class="modal-container" style="max-width:420px;text-align:center;padding:28px">
+        <button class="modal-close" onclick="closeQrModal()">✕</button>
+        <h3 style="color:var(--green-lt);margin-bottom:8px">📱 Mobil Canlı Bağlantı QR Kodu</h3>
+        <p style="font-size:12px;color:var(--text-2);margin-bottom:16px">Telefon kameranızla taratarak canlı maç skorlarını ve kuponlarınızı mobil cihazınızdan anlık takip edin.</p>
+        <div id="qrCodeImageContainer" style="background:white;padding:20px;border-radius:16px;display:inline-block;box-shadow:0 0 20px rgba(16,185,129,0.3);min-width:220px;min-height:220px">
+            <div class="loading-spinner"></div>
+        </div>
+        <div id="qrUrlText" style="font-size:12px;color:var(--green-lt);font-weight:800;margin-top:14px">⚡ Canlı Mobil Senkronizasyon: Yükleniyor...</div>
+    </div>
+</div>
+
+<!-- ═══════════════════ FLOATING AI CHATBOT WINDOW ═══════════════════ -->
+<div class="ai-chat-window" id="aiChatWindow">
+    <div class="ai-chat-header">
+        <div class="ai-chat-title">
+            🤖 Oranix AI Omnipotent Botu
+        </div>
+        <button class="ai-chat-close" onclick="toggleChatbot()">✕</button>
+    </div>
+    <div class="ai-chat-chips">
+        <button class="chip-btn" onclick="sendQuickChip('Banko kupon ver')">⚡ Günün Bankosu</button>
+        <button class="chip-btn" onclick="sendQuickChip('Yüksek gol maçları hangileri?')">⚽ 2.5 Üst Maçlar</button>
+        <button class="chip-btn" onclick="sendQuickChip('Canlı maçları göster')">🔴 Canlı Maçlar</button>
+        <button class="chip-btn" onclick="startVoiceRecognition()">🎙️ Sesli Konuş</button>
+    </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+        <div class="ai-msg bot">
+            🤖 Merhaba! Ben <strong>Oranix Evidence Fusion analiz asistanı</strong>. Mikrofon butonuna basarak sesli konuşabilir veya soru sorabilirsiniz!
+        </div>
+    </div>
+    <div class="ai-chat-input-row">
+        <input type="text" id="aiChatInput" placeholder="Mesajınızı yazın..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+        <button class="ai-send-btn" onclick="sendChatMessage()">Gönder</button>
+    </div>
+</div>
+
+<!-- FLOATING COUPON SLIP DRAWER WITH STAKE & PAYOUT CALCULATOR -->
+<div class="slip-drawer" id="slipDrawer">
+    <div class="slip-header" onclick="toggleSlipDrawer()">
+        <div class="slip-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Kuponum (<span id="slipCountHeader">0</span>)
+        </div>
+        <button class="slip-close" onclick="event.stopPropagation(); toggleSlipDrawer()">✕</button>
+    </div>
+    <div class="slip-body" id="slipBody">
+        <div class="empty-slip">Kuponunuza henüz maç eklemediniz.</div>
+    </div>
+    <div class="slip-footer">
+        <div class="slip-risk-summary" id="slipRiskSummary">Seçim eklenince kupon riski hesaplanır.</div>
+        <div class="slip-total-row">
+            <span>Toplam Oran:</span>
+            <span class="slip-total-odds" id="slipTotalOdds">1.00</span>
+        </div>
+        <div class="stake-calc-row">
+            <label>Misli (TL):</label>
+            <input type="number" id="stakeInput" value="100" min="10" step="10" oninput="updatePayoutCalc()">
+            <span class="payout-val">Kazanç: <strong id="payoutVal" style="color:var(--green-lt)">100 TL</strong></span>
+        </div>
+        <div class="slip-btn-row" style="flex-wrap:wrap;gap:4px">
+            <button class="slip-action-btn copy-btn" onclick="copySlipText()">📋 Kopyala</button>
+            <button class="slip-action-btn" onclick="shareWhatsappCoupon()" style="background:#25D366;color:white;font-weight:800">💬 WhatsApp</button>
+            <button class="slip-action-btn" onclick="shareTelegramCoupon()" style="background:#0088cc;color:white;font-weight:800">✈️ Telegram</button>
+            <button class="slip-action-btn save-btn" onclick="saveCurrentSlip()">💾 Kaydet</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADVANCED MATCH DETAIL MODAL -->
+<div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-container" id="modalContainer">
+        <button class="modal-close" onclick="closeModalBtn()">✕</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+    <script src="app.js?v=15000_1500"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => registration.update())
+            .catch(err => console.log('SW register error:', err));
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (sessionStorage.getItem('oranix-sw-reloaded')) return;
+            sessionStorage.setItem('oranix-sw-reloaded', '1');
+            window.location.reload();
+        });
+    }
+</script>
+</body>
+</html>
